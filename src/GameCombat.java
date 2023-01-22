@@ -1,29 +1,84 @@
+import java.util.Objects;
 import java.util.Random;
 import java.util.Scanner;
 
 public class GameCombat {
-    Scanner in = new Scanner(System.in);
-    Random rand = new Random();
-    int daño = rand.nextInt(30);
-    void gameAction(String enemy, int vidaEnemigo, int ataqueEnemigo, String playerName, int vidaJugador){
-        System.out.println("un terrible " + enemy + " aparece en tu camino");
-        System.out.println("Que deseas hacer:");
-        System.out.println("Opcion 1: atacar");
-        int myLife = vidaJugador;
-        int enemyLife = vidaEnemigo;
-        while(enemyLife > 0){
-            String input = in.nextLine();
-            if(input.equals(1)){
-                daño -= enemyLife;
-                ataqueEnemigo -= myLife;
-                System.out.println("golpeas al " + enemy + " provocando " + daño + " puntos de daño");
-                System.out.println("el " + enemy + " te golpea quitandote " + ataqueEnemigo + " puntos de vida");
-                if(vidaJugador <1){
-                    System.out.println(" te undes en un charco de tu propia sangre " + enemy + " te mira con curiosidad mientras tomas tu ultimo aliento...");
-                    break;
-                }
-            }
+    void startCombat(){
+        Enemy enemy = new Enemy();
+        Scanner in = new Scanner(System.in);
+        Random rand = new Random();
+        Mabor mabor = new Mabor();
+        String text;
+        if (Objects.equals(enemy.spawn(), "Alien Gris")){
+            enemy.nombre = "Alien Gris";
+            enemy.vida = 30;
+            enemy.ataque = 20;
+        }
+        if (Objects.equals(enemy.spawn(), "Espectro Gigante")){
+            enemy.nombre = "Espectro Gigante";
+            enemy.vida = 50;
+            enemy.ataque = 30;
+        }
+        if (Objects.equals(enemy.spawn(), "Perro Rabioso")){
+            enemy.nombre = "Perro Rabioso";
+            enemy.vida = 20;
+            enemy.ataque = 15;
+        }
+        if (Objects.equals(enemy.spawn(), "Hombre de Negro")){
+            enemy.nombre = "Hombre de Negro";
+            enemy.vida = 40;
+            enemy.ataque = 25;
+        }
+        System.out.println("Aparece " + enemy.spawn() + " con \n" + enemy.vida + " puntos de vida \n" + enemy.ataque + " puntos de ataque");
+        System.out.println(" ");
+        System.out.println(" ");
+        System.out.println("*----------------------------------------------------------*");
+        text = "██████╗░░█████╗░████████╗░█████╗░██╗░░░░░██╗░░░░░░█████╗░██╗\n" +
+                "██╔══██╗██╔══██╗╚══██╔══╝██╔══██╗██║░░░░░██║░░░░░██╔══██╗██║\n" +
+                "██████╦╝███████║░░░██║░░░███████║██║░░░░░██║░░░░░███████║██║\n" +
+                "██╔══██╗██╔══██║░░░██║░░░██╔══██║██║░░░░░██║░░░░░██╔══██║╚═╝\n" +
+                "██████╦╝██║░░██║░░░██║░░░██║░░██║███████╗███████╗██║░░██║██╗\n" +
+                "╚═════╝░╚═╝░░╚═╝░░░╚═╝░░░╚═╝░░╚═╝╚══════╝╚══════╝╚═╝░░╚═╝╚═╝";
+        mabor.titles(text);
+        System.out.println("\n*----------------------------------------------------------*");
+       while (enemy.vida > 0) {
+           System.out.println(" ");
+           System.out.println(" ");
+           System.out.println(enemy.nombre);
+           System.out.println("Puntos de vida: " + enemy.vida);
+           text = "Que haras?\n";
+           mabor.speech(text);
+           System.out.println("1) Atacar");
+           System.out.println("2) Huir");
+           String input = in.nextLine();
+           if(input.equals("1")){
+               int damageDealt = rand.nextInt(50);
+               int damageTaken = rand.nextInt(enemy.ataque);
+
+               enemy.vida -= damageDealt;
+
+
+               text = "atacas causando " + damageDealt +" puntos de daño!!\n";
+               mabor.speech(text);
+               text = "recibes " + damageTaken + " ";
+               mabor.speech(text);
+           }
+           if(enemy.vida < 1){
+
+           }
 
         }
+        System.out.println("\n*----------------------------------------------------------*");
+        text = enemy.nombre + " ah sido derrotado!!";
+        mabor.speech(text);
+
+    }
+
+}
+
+class GameCombatTest{
+    public static void main(String[]args){
+        GameCombat g = new GameCombat();
+        g.startCombat();
     }
 }
