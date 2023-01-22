@@ -1,6 +1,6 @@
 public class Mabor {
     void speech(String input){
-        //input = input + "                     ";
+        input = input + "\n";
         for (int i = 0; i < input.length(); i++){
             System.out.print(input.charAt(i));
             try {
@@ -12,7 +12,7 @@ public class Mabor {
     }
 
     void halt(String input){
-        input = input + "                     ";
+        input = input + "                         \n";
         for (int i = 0; i < input.length(); i++){
             System.out.print(input.charAt(i));
             try {
